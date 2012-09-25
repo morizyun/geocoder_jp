@@ -5,7 +5,7 @@ require 'geocoder_jp/version'
 
 Gem::Specification.new do |gem|
   gem.name          = "geocoder_jp"
-  gem.version       = GeocoderJp::VERSION
+  gem.version       = GeocoderJP::VERSION
   gem.authors       = ["yukinoraru"]
   gem.email         = ["yukinoraru@gmail.com"]
   gem.description   = %q{Geocoding.jp API client for Ruby}
@@ -18,6 +18,6 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   # describe dpendency
-  gem.add_dependency "nokogiri", "~>1.5.5"
+  gem.add_dependency "activesupport", "~>3.2.8"
 
 end
