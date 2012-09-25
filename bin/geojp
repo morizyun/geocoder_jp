@@ -1,0 +1,52 @@
+#!/usr/bin/env ruby
+# coding: utf-8
+require 'optparse'
+require 'active_support/core_ext'
+require 'pp'
+require_relative '../lib/geocoder_jp'
+::Version = GeocoderJP::VERSION
+
+puts_green = lambda{|msg| puts "\e[32m#{msg}\e[0m"}
+puts_red   = lambda{|msg| puts "\e[31m#{msg}\e[0m"}
+def show_help
+  puts "Usage: [-o] geojp [spot_name]"
+  puts "Example: geojp -o 東京スカイツリー"
+  puts "Options:"
+  puts " -o : open the spot with Google Maps on www.geocoding.jp"
+  exit
+end
+
+# parse ARGV using 'optparse'
+is_open = false
+opt = OptionParser.new
+opt.on('-o') do
+  is_open = true
+end
+opt.on('-h', '--help') do
+  show_help
+end
+opt.parse!
+
+#
+query = ARGV.first
+show_help if query.blank?
+
+response = nil
+begin
+  response = GeocoderJP.get(query)
+  puts_green.call "Success!"
+  pp response
+rescue => exception
+  puts_red.call "[ERROR] #{exception.to_s}"
+end
+
+if is_open && response
+  system("open #{response['url']}")
+  # 以下Windowsとかでやる場合にリダイレクト専用のHTML作って
+  # やろっかなー、とか考えたけどめんどいからやめた！
+  # f = Tempfile.new(['redirect', '.html'])
+  # f.puts '<meta http-equiv="Refresh" content="0; URL=%s">'%[response["url"]]
+  # puts_green.call "opening..."
+  # system("open #{f.path}")
+  # f.close
+end
