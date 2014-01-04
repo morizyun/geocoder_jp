@@ -18,6 +18,5 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
 
   # describe dpendency
-  gem.add_dependency "activesupport", "~>3.2.8"
-
+  #gem.add_dependency "activesupport", "~>3.2.8"
 end
